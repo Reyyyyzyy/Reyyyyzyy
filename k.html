@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>SDIHS Web Layout + RPS Game</title>
+
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:'Segoe UI',Arial,sans-serif;background:linear-gradient(120deg,#e9eef5,#fdfefe);}
+
+/* HEADER */
+header{background:linear-gradient(90deg,#0f2027,#203a43,#2c5364);padding:20px 10px;text-align:center;color:white}
+
+/* TOP NAV */
+ul.nav{display:flex;list-style:none;margin:0;padding:0;background:#111;justify-content:center}
+ul.nav li{position:relative}
+ul.nav li a{display:block;color:white;padding:14px 20px;text-decoration:none;cursor:pointer}
+ul.nav li a:hover{background:#00bcd4;color:black}
+
+/* DROPDOWN */
+ul.nav li ul{
+display:none;position:absolute;background:#222;list-style:none;padding:0;margin:0;
+top:100%;left:0;min-width:160px;z-index:99
+}
+ul.nav li:hover ul{display:block}
+ul.nav li ul li a{padding:12px}
+
+/* SIDEBAR */
+section.navside{
+float:left;width:22%;min-height:1000px;
+background:linear-gradient(180deg,#1e1e2f,#12121d);padding:20px;
+}
+.navside ul{list-style:none;padding:0;margin:0}
+.navside ul li a{
+display:block;padding:14px;margin-bottom:10px;background:#2a2a40;
+border-radius:10px;text-decoration:none;color:white;cursor:pointer
+}
+.navside ul li a:hover{background:#00bcd4;color:black}
+
+.q button{
+    display:block;
+    width:100%;
+    padding:12px;
+    margin:6px 0;
+    border:none;
+    border-radius:8px;
+    background:#777;     /* gray */
+    color:white;         /* white text */
+    cursor:pointer;
+    transition:0.2s;
+}
+
+.q button:hover:not(:disabled){
+    background:#666;
+}
+
+.q button:disabled{
+    cursor:not-allowed;
+    opacity:0.9;
+}
+
+/* CONTENT */
+article{
+float:left;width:78%;padding:40px;background:white;
+min-height:1000px;border-radius:20px 0 0 0;
+}
+article h2{color:#2c5364;border-bottom:3px solid #00bcd4;display:inline-block}
+
+/* FOOTER */
+footer{background:#111;padding:12px;text-align:center;color:white;clear:both}
+
+/* ===== GAME ===== */
+.gameWrap{background:#0b1220;color:white;border-radius:16px;padding:20px}
+.game-container{display:flex;gap:30px;justify-content:center;flex-wrap:wrap}
+.side{width:300px;background:#12121c;padding:20px;border-radius:18px}
+.choice-btn{padding:10px;margin:6px;border-radius:8px;border:none;background:#2b2b44;color:white;cursor:pointer}
+.choice-btn:hover{background:#00eaff;color:black}
+.choice-btn:disabled{opacity:.4;cursor:not-allowed}
+
+#result{font-size:20px;font-weight:bold;margin-top:15px}
+
+#questionBox{margin-top:20px;background:#1f1f35;padding:18px;border-radius:14px;display:none}
+.mc-option{display:block;width:100%;margin:8px 0;padding:10px;background:#2b2b44;color:white;border:none;border-radius:8px;cursor:pointer}
+.mc-option:hover{background:#ffcc00;color:black}
+</style>
+</head>
+
+<body>
+
+<header>
+<h2>SDIHS</h2>
+<h3>Santo Domingo Integrated High School</h3>
+</header>
+
+<!-- TOP NAV WITH DROPDOWNS -->
+<ul class="nav">
+<li><a onclick="loadHome()">Home</a></li>
+<li><a onclick="loadAbout()">About</a></li>
+
+<li>
+<a>Activities</a>
+<ul>
+<li><a onclick="loadActivity(1)">Activity 1</a></li>
+<li><a onclick="loadActivity(2)">Activity 2</a></li>
+<li><a onclick="loadActivity(3)">Activity 3</a></li>
+</ul>
+</li>
+
+<li>
+<a>Quiz</a>
+<ul>
+<li><a onclick="loadQuiz(6)">Quiz 1</a></li>
+<li><a onclick="loadQuiz(7)">Quiz 2</a></li>
+<li><a onclick="loadQuiz(8)">Quiz 3</a></li>
+</ul>
+</li>
+</ul>
+
+<!-- SIDE NAV -->
+<section class="navside">
+<ul>
+<li><a onclick="loadContent(11)">Content</a></li>
+<li><a onclick="loadContent(12)">Objectives</a></li>
+<li><a onclick="loadContent(13)">Legal Basis</a></li>
+<li><a onclick="loadContent(14)">References</a></li>
+<li><a onclick="loadGame()">RPS Game</a></li>
+</ul>
+</section>
+
+<!-- CONTENT -->
+<article id="content">
+<h2>WELCOME SDIHS!</h2>
+<p>Batang Santo likas na Mabait, Matalino, at Aktibo!</p>
+</article>
+
+<footer>&copy; Fourth Year Students 2025–2026</footer>
+
+<script>
+
+const content=document.getElementById("content");
+
+/* ===== PAGES ===== */
+
+function loadHome(){
+content.innerHTML=`
+<h2>MISSION:</h2>
+<p>
+To promote the right of every Filipino to quality, equitable, culture-based,
+and complete basic education where students learn in a child-friendly,
+gender-sensitive, safe, and motivating environment.
+</p>
+
+<h2>VISION:</h2>
+<p>
+We dream of Filipinos who passionately love their country and whose values and
+competencies enable them to realize their full potential and contribute
+meaningfully to building the nation.
+</p>
+
+<h2>CORE VALUES:</h2>
+<p>
+MAKA-DIYOS<br>
+MAKA-TAO<br>
+MAKA-KALIKASAN<br>
+MAKA-BANSA
+</p>
+`;
+}
+
+function loadAbout() {
+
+    const profiles = [
+        {
+            fullname: "Denzil Matthew Cole",
+            address: "House",
+            fb: "https://www.facebook.com/share/1Czp2ULYN8/"
+        },
+        {
+            fullname: "John Rey Naling",
+            address: "Sitio Muzon, Puting Kahoy, Silang, Cavite",
+            fb: "https://www.facebook.com/share/1H7fAen53t/"
+        },
+        {
+            fullname: "Elijah Alrey Pasion",
+            address: "Bahay nila",
+            fb: "https://www.facebook.com/share/17RohyXP2o/"
+        },
+        {
+            fullname: "Shyla Guillang",
+            address: "Ewan",
+            fb: "https://www.facebook.com/shyla.guillang"
+        },
+        {
+            fullname: "Ronald Delos Santos",
+            address: "Bahay sa Carmen",
+            fb: "https://www.facebook.com/share/1SfwRiNL2P/"
+        }
+    ];
+
+    let html = `<h2>ABOUT THE DEVELOPERS</h2>`;
+
+    profiles.forEach(p => {
+        html += `
+        <p>
+            <b>Name:</b>
+            <a href="${p.fb}" target="_blank">${p.fullname}</a><br>
+            <b>Address:</b> ${p.address}
+        </p>
+        <hr>
+        `;
+    });
+
+    document.getElementById("content").innerHTML = html;
+}
+
+
+function loadActivity(num) {
+
+    if (num === 1) {
+        document.getElementById("content").innerHTML = `
+<h2>ACTIVITY 1: Understanding the Game Rules</h2>
+
+<p><b>Objective:</b> To understand how Rock Paper Scissors works.</p>
+
+<p><b>Instructions:</b></p>
+<ol>
+<li>List the three choices in the game.</li>
+<li>Explain when the player wins, loses, or draws.</li>
+<li>Write your answers in your notebook.</li>
+</ol>
+
+<p><b>Expected Output:</b> Short written explanation of the game rules.</p>
+`;
+    }
+
+    else if (num === 2) {
+        document.getElementById("content").innerHTML = `
+<h2>ACTIVITY 2: Basic JavaScript Logic</h2>
+
+<p><b>Objective:</b> To apply if-else conditions in the game.</p>
+
+<p><b>Instructions:</b></p>
+<ol>
+<li>Study how the game decides who wins.</li>
+<li>Draw a simple flowchart of the decision process.</li>
+<li>Identify where if, else if, and else are used.</li>
+</ol>
+
+<p><b>Expected Output:</b> Simple flowchart of the game logic.</p>
+`;
+    }
+
+    else if (num === 3) {
+        document.getElementById("content").innerHTML = `
+<h2>ACTIVITY 3: ICT Reviewer Question Making</h2>
+
+<p><b>Objective:</b> To create ICT questions for the game reviewer.</p>
+
+<p><b>Instructions:</b></p>
+<ol>
+<li>Create at least 5 ICT or coding questions.</li>
+<li>Each question must have 4 choices.</li>
+<li>Mark the correct answer.</li>
+<li>Questions should be related to HTML, CSS, or JavaScript.</li>
+</ol>
+
+<p><b>Expected Output:</b> Set of multiple-choice ICT questions to be added in the game.</p>
+`;
+    }
+
+}
+
+function loadQuiz(num) {
+
+    if (num === 6) {
+        document.getElementById("content").innerHTML = `
+<h2>QUIZ 1: Rock Paper Scissors & ICT Basics</h2>
+
+<div class="q">
+<p>1. What happens when the player loses to the AI?</p>
+<button onclick="checkQuizAnswer(this,false)">A. The game closes</button><br>
+<button onclick="checkQuizAnswer(this,true)">B. A question will appear</button><br>
+<button onclick="checkQuizAnswer(this,false)">C. The computer restarts</button><br>
+<button onclick="checkQuizAnswer(this,false)">D. The player wins</button>
+</div><br>
+
+<div class="q">
+<p>2. Which language is used to make the game interactive?</p>
+<button onclick="checkQuizAnswer(this,false)">A. HTML</button><br>
+<button onclick="checkQuizAnswer(this,false)">B. CSS</button><br>
+<button onclick="checkQuizAnswer(this,true)">C. JavaScript</button><br>
+<button onclick="checkQuizAnswer(this,false)">D. Python</button>
+</div><br>
+
+<div class="q">
+<p>3. What are the three choices in the game?</p>
+<button onclick="checkQuizAnswer(this,true)">A. Rock, Paper, Scissors</button><br>
+<button onclick="checkQuizAnswer(this,false)">B. Fire, Water, Grass</button><br>
+<button onclick="checkQuizAnswer(this,false)">C. Sword, Shield, Bow</button><br>
+<button onclick="checkQuizAnswer(this,false)">D. Up, Down, Left</button>
+</div><br>
+
+<div class="q">
+<p>4. What does CSS control on the website?</p>
+<button onclick="checkQuizAnswer(this,false)">A. Questions</button><br>
+<button onclick="checkQuizAnswer(this,true)">B. Design and colors</button><br>
+<button onclick="checkQuizAnswer(this,false)">C. Game rules</button><br>
+<button onclick="checkQuizAnswer(this,false)">D. Internet connection</button>
+</div><br>
+
+<div class="q">
+<p>5. What is the main purpose of this project?</p>
+<button onclick="checkQuizAnswer(this,false)">A. Just for playing</button><br>
+<button onclick="checkQuizAnswer(this,true)">B. Reviewing ICT using a game</button><br>
+<button onclick="checkQuizAnswer(this,false)">C. Watching videos</button><br>
+<button onclick="checkQuizAnswer(this,false)">D. Chatting online</button>
+</div>
+`;
+    }
+
+    if (num === 7) {
+        document.getElementById("content").innerHTML = `
+<h2>QUIZ 2: Game-Based Learning</h2>
+
+<div class="q">
+<p>1. When does the question appear in the game?</p>
+<button onclick="checkQuizAnswer(this,false)">A. When the player wins</button><br>
+<button onclick="checkQuizAnswer(this,true)">B. When the player loses</button><br>
+<button onclick="checkQuizAnswer(this,false)">C. When it is a draw</button><br>
+<button onclick="checkQuizAnswer(this,false)">D. When the player exits</button>
+</div><br>
+
+<div class="q">
+<p>2. What type of questions appear after losing?</p>
+<button onclick="checkQuizAnswer(this,false)">A. Math only</button><br>
+<button onclick="checkQuizAnswer(this,false)">B. Science only</button><br>
+<button onclick="checkQuizAnswer(this,true)">C. ICT and coding questions</button><br>
+<button onclick="checkQuizAnswer(this,false)">D. History questions</button>
+</div><br>
+
+<div class="q">
+<p>3. Which part of the website controls the game rules?</p>
+<button onclick="checkQuizAnswer(this,false)">A. HTML</button><br>
+<button onclick="checkQuizAnswer(this,true)">B. JavaScript</button><br>
+<button onclick="checkQuizAnswer(this,false)">C. CSS</button><br>
+<button onclick="checkQuizAnswer(this,false)">D. Browser</button>
+</div><br>
+
+<div class="q">
+<p>4. Why is the game effective as a reviewer?</p>
+<button onclick="checkQuizAnswer(this,true)">A. It is fun and interactive</button><br>
+<button onclick="checkQuizAnswer(this,false)">B. It has long readings</button><br>
+<button onclick="checkQuizAnswer(this,false)">C. It has no design</button><br>
+<button onclick="checkQuizAnswer(this,false)">D. It has no questions</button>
+</div><br>
+
+<div class="q">
+<div class="q">
+<p>5. What should the player do after answering incorrectly?</p>
+<button onclick="checkQuizAnswer(this,false)">A. Quit the game</button><br>
+<button onclick="checkQuizAnswer(this,true)">B. Review the lesson and try again</button><br>
+<button onclick="checkQuizAnswer(this,false)">C. Close the website</button><br>
+<button onclick="checkQuizAnswer(this,false)">D. Ignore the mistake</button>
+</div>
+`;
+    }
+
+if (num === 8) {
+        document.getElementById("content").innerHTML = `
+<h2>QUIZ 3: Project Content & Objectives</h2>
+
+<div class="q">
+<p>1. What game is used as the main reviewer in this project?</p>
+<button onclick="checkQuizAnswer(this,false)">A. Chess</button><br>
+<button onclick="checkQuizAnswer(this,true)">B. Rock Paper Scissors</button><br>
+<button onclick="checkQuizAnswer(this,false)">C. Mobile Legends</button><br>
+<button onclick="checkQuizAnswer(this,false)">D. Word Puzzle</button>
+</div><br>
+
+<div class="q">
+<p>2. What happens when the player loses to the AI?</p>
+<button onclick="checkQuizAnswer(this,false)">A. Game ends</button><br>
+<button onclick="checkQuizAnswer(this,true)">B. A question will appear</button><br>
+<button onclick="checkQuizAnswer(this,false)">C. Screen turns black</button><br>
+<button onclick="checkQuizAnswer(this,false)">D. Player wins</button>
+</div><br>
+
+<div class="q">
+<p>3. What subject are the questions focused on?</p>
+<button onclick="checkQuizAnswer(this,true)">A. ICT and Coding</button><br>
+<button onclick="checkQuizAnswer(this,false)">B. Math</button><br>
+<button onclick="checkQuizAnswer(this,false)">C. History</button><br>
+<button onclick="checkQuizAnswer(this,false)">D. Science</button>
+</div><br>
+
+<div class="q">
+<p>4. What is the main objective of this project?</p>
+<button onclick="checkQuizAnswer(this,false)">A. To play only</button><br>
+<button onclick="checkQuizAnswer(this,true)">B. To review ICT using a game</button><br>
+<button onclick="checkQuizAnswer(this,false)">C. To chat with friends</button><br>
+<button onclick="checkQuizAnswer(this,false)">D. To watch videos</button>
+</div><br>
+
+<div class="q">
+<p>5. Who is the target users of the project?</p>
+<button onclick="checkQuizAnswer(this,false)">A. Teachers only</button><br>
+<button onclick="checkQuizAnswer(this,true)">B. ICT and IT students</button><br>
+<button onclick="checkQuizAnswer(this,false)">C. Parents only</button><br>
+<button onclick="checkQuizAnswer(this,false)">D. Elementary pupils</button>
+</div>
+`;
+   }
+}
+
+function checkQuizAnswer(btn, isCorrect) {
+    const buttons = btn.parentElement.querySelectorAll("button");
+
+    // disable all buttons
+    buttons.forEach(b => {
+        b.disabled = true;
+        b.style.backgroundColor = "#777";
+        b.style.color = "white";
+    });
+
+    if (isCorrect) {
+        btn.style.backgroundColor = "green";
+    } else {
+        btn.style.backgroundColor = "red";
+    }
+}
+
+function loadContent(n){
+if(n==11) content.innerHTML=`<h2>CONTENT</h2>
+<p> TITLE: <br> Game On, Code On: A Study on AI-Enhanced Gamification for ICT Reviewer Development. </p> 
+
+<p> EXPECTED OUTPUT <br> An entertaining reviewer for students. It's a website where ICT/IT students can review coding concepts, but with a twist: it's a game — rock, paper, scissors, where the human plays against a system-based AI. The human clicks on their choice (rock, paper, scissors) at the same time as the AI makes its choice. This is where the review or learning begins: if the human wins by defeating the AI, they simply win. However, if the human loses, a question will pop up for them; it will either be multiple-choice or identification. The questions will only be about ICT or coding. Every time the answer is wrong, there will be an animation of an explosion. </p>`;
+if(n==12) content.innerHTML=`<h2>OBJECTIVES</h2>
+<p><b>Objectives:</b><br>  
+1. To apply basic HTML, CSS, and JavaScript skills in creating an interactive  
+Rock Paper Scissors game.<br><br>  
+  
+2. To enhance the learning and problem-solving skills of Grade 10 students  
+through ICT-based quiz questions.<br><br>  
+  
+3. To promote interest and engagement in ICT and programming using a  
+game-based learning approach.  
+</p>  
+  
+<p><b>Target:</b><br>  
+ICT Students<br>  
+IT Students  
+</p>  `;
+if(n==13) content.innerHTML=`<<h2>LEGAL BASIS</h2>
+ <p> Legal Basis: <br>
+This project is based on Republic Act No. 10533 (Enhanced Basic Education Act of 2013) and DepEd policies promoting ICT education. It is a Grade 10 student-made project that applies basic programming skills and complies with the Data Privacy Act and Intellectual Property Code of the Philippines. </p>`;
+if(n==14) content.innerHTML=`<h2>REFERENCES</h2>
+<p> Rhodora Manalo - <br> Assessments/Outputs for ICT Students <br><br>
+
+We did the rest - <br>
+The idea of ROCK PAPER SCISSORS is came from our group to make a fun reviewer not just only reading, also when did u lose one question is going to pop up that also our idea.  </p>`;
+}
+
+/* ===== GAME ===== */
+
+const questions = [
+
+{type:"id", question:"Biggest heading tag?", answer:"h1"},
+
+{type:"id", question:'Fill: <p style="___: red;">This text is red</p>', answer:"color"},
+
+{type:"id", question:"Tag for paragraph?", answer:"p"},
+
+{type:"id", question:'Fill: <img _____="picture.jpg">', answer:"src"},
+
+{type:"id", question:'Fill: <a ___="youtube.com">', answer:"href"},
+
+{type:"id", question:'Fill: border: ___ red', answer:"dotted"},
+
+{type:"id", question:'Fill: text alignment → ___ : center', answer:"text-align"},
+
+{type:"mc", question:"Purpose of <marquee>?", choices:["Highlight","Scroll","Enlarge","Shrink"], answer:"Scroll"},
+
+{type:"mc", question:"Which is NOT valid HTML tag?", choices:["<h7>","<article>","<div>","<p>"], answer:"<h7>"},
+
+{type:"mc", question:"Tag for hyperlink?", choices:["<link>","<a>","<href>","<url>"], answer:"<a>"},
+
+{type:"mc", question:"Image source attribute?", choices:["href","link","src","img"], answer:"src"},
+
+{type:"mc", question:"Unordered list tag?", choices:["<ol>","<ul>","<li>","<list>"], answer:"<ul>"},
+
+{type:"mc", question:"<title> shows on webpage?", choices:["True","False"], answer:"False"},
+
+{type:"mc", question:"HTML structures webpage?", choices:["True","False"], answer:"True"},
+
+{type:"mc", question:"<img> needs closing tag?", choices:["True","False"], answer:"False"},
+
+{type:"mc", question:"<br> makes new paragraph?", choices:["True","False"], answer:"False"},
+
+{type:"id", question:"Tag for numbered list?", answer:"ol"},
+
+{type:"id", question:"Attribute for image file location?", answer:"src"},
+
+{type:"id", question:"Semantic emphasis tag?", answer:"em"},
+
+{type:"id", question:"Block-level container tag?", answer:"div"}
+
+];
+
+let playerScore=0,aiScore=0,tries=2,currentQuestion;
+
+function loadGame(){
+content.innerHTML=`
+<div class="gameWrap">
+
+<h2 style="color:#00eaff">ROCK PAPER SCISSORS vs AI</h2>
+
+<div class="game-container">
+
+<div class="side">
+<h3>PLAYER</h3>
+<p>Score: <span id="playerScore">0</span></p>
+<button class="choice-btn" id="rockBtn" onclick="play('rock')">Rock</button>
+<button class="choice-btn" id="paperBtn" onclick="play('paper')">Paper</button>
+<button class="choice-btn" id="scissorsBtn" onclick="play('scissors')">Scissors</button>
+</div>
+
+<div class="side">
+<h3>AI</h3>
+<p>Score: <span id="aiScore">0</span></p>
+<p>Choice: <span id="aiChoice">-</span></p>
+</div>
+
+</div>
+
+<p id="result"></p>
+
+<div id="questionBox">
+<p id="questionText"></p>
+<div id="mcContainer"></div>
+<input id="answerInput" style="display:none">
+<p>Tries: <span id="triesLeft">2</span></p>
+<p id="feedback"></p>
+</div>
+
+</div>`;
+playerScore=0;aiScore=0;updateScores();
+}
+
+function updateScores(){
+document.getElementById("playerScore").innerText=playerScore;
+document.getElementById("aiScore").innerText=aiScore;
+}
+
+function disableButtons(state){
+["rockBtn","paperBtn","scissorsBtn"].forEach(id=>{
+document.getElementById(id).disabled=state;
+});
+}
+
+function play(pick){
+const ai=["rock","paper","scissors"][Math.floor(Math.random()*3)];
+document.getElementById("aiChoice").innerText=ai;
+
+if(pick===ai){
+setResult("DRAW!","white"); 
+return;
+}
+
+const win=(pick==="rock"&&ai==="scissors")||(pick==="paper"&&ai==="rock")||(pick==="scissors"&&ai==="paper");
+
+if(win){
+playerScore++;updateScores();
+setResult("YOU WIN!","lightgreen");
+}else{
+aiScore++;updateScores();
+setResult(""); // REMOVE lose text
+disableButtons(true);
+loadQuestion();
+}
+}
+
+function setResult(text,color){
+const r=document.getElementById("result");
+r.innerText=text;
+r.style.color=color;
+}
+
+function loadQuestion(){
+currentQuestion=questions[Math.floor(Math.random()*questions.length)];
+tries=2;
+document.getElementById("triesLeft").innerText=tries;
+document.getElementById("questionText").innerText=currentQuestion.question;
+document.getElementById("questionBox").style.display="block";
+
+const mc=document.getElementById("mcContainer");
+const input=document.getElementById("answerInput");
+mc.innerHTML="";input.value="";
+
+if(currentQuestion.type==="mc"){
+input.style.display="none";
+currentQuestion.choices.forEach(c=>{
+let b=document.createElement("button");
+b.className="mc-option";b.innerText=c;
+b.onclick=()=>checkAnswer(c);
+mc.appendChild(b);
+});
+}else{
+input.style.display="block";
+input.onkeydown=e=>{if(e.key==="Enter")checkAnswer(input.value);}
+}
+}
+
+function checkAnswer(ans){
+const feedback=document.getElementById("feedback");
+
+if(ans.toLowerCase()==currentQuestion.answer.toLowerCase()){
+playerScore++;updateScores();
+feedback.innerText="CORRECT!";
+feedback.style.color="lightgreen";
+setTimeout(closeQuestion,800);
+}else{
+tries--;
+feedback.innerText="WRONG!";
+feedback.style.color="red";
+document.getElementById("triesLeft").innerText=tries;
+
+if(tries<=0){
+setTimeout(closeQuestion,800);
+}
+}
+}
+
+function closeQuestion(){
+document.getElementById("questionBox").style.display="none";
+document.getElementById("feedback").innerText="";
+document.getElementById("result").innerText="";
+disableButtons(false);
+}
+</script>
+
+</body>
+</html>
